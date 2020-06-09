@@ -1,6 +1,7 @@
 package com.kosarev.dbconnection.repository;
 
 import com.kosarev.dbconnection.domain.Customer;
+import com.kosarev.dbconnection.error.InternalException;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.PreparedStatement;
@@ -16,11 +17,11 @@ public class CustomerDAO extends ConnectorDB {
     private PreparedStatement editStatement;
     private PreparedStatement deleteStatement;
 
-    public Optional<Customer> getCustomer(int id) {
+    public Optional<Customer> getCustomer(int id) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e){
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
 
         String selectQuery = "SELECT id, name, full_name " +
@@ -31,8 +32,8 @@ public class CustomerDAO extends ConnectorDB {
             resultSet = statement.executeQuery(selectQuery);
             if (resultSet.first()) {
                 String name = resultSet.getNString("name");
-                String full_name = resultSet.getNString("full_name");
-                return Optional.of(new Customer(id, name, full_name));
+                String fullName = resultSet.getNString("full_name");
+                return Optional.of(new Customer(id, name, fullName));
             }
         } catch (SQLException e) {
             log.error("Result set error. " + e.getMessage());
@@ -43,11 +44,11 @@ public class CustomerDAO extends ConnectorDB {
         return Optional.empty();
     }
 
-    public Optional<Customer> getCustomer(String name) {
+    public Optional<Customer> getCustomer(String name) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e){
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQuery = "SELECT id, name, full_name " +
                 "FROM customers " +
@@ -57,8 +58,8 @@ public class CustomerDAO extends ConnectorDB {
             resultSet = statement.executeQuery(selectQuery);
             if (resultSet.first()) {
                 int id = resultSet.getInt("id");
-                String full_name = resultSet.getNString("full_name");
-                return Optional.of(new Customer(id, name, full_name));
+                String fullName = resultSet.getNString("full_name");
+                return Optional.of(new Customer(id, name, fullName));
             }
         } catch (SQLException e) {
             log.error("Result set error. " + e.getMessage());
@@ -69,13 +70,14 @@ public class CustomerDAO extends ConnectorDB {
         return Optional.empty();
     }
 
-    public List<Customer> getAllCustomer() {
+    public List<Customer> getAllCustomer() throws InternalException {
         List<Customer> customers = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e){
-            return customers;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
+
         String selectQuery = "Select id, name, full_name FROM CUSTOMERS";
         resultSet = null;
         try {
@@ -96,11 +98,11 @@ public class CustomerDAO extends ConnectorDB {
         return customers;
     }
 
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
 
         initPreparedStatements();
@@ -115,11 +117,11 @@ public class CustomerDAO extends ConnectorDB {
         }
     }
 
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(Customer customer) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 
@@ -133,11 +135,11 @@ public class CustomerDAO extends ConnectorDB {
         }
     }
 
-    public void editCustomer(Customer customer, String name, String fullName) {
+    public void editCustomer(Customer customer, String name, String fullName) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 

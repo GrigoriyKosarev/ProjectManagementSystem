@@ -1,5 +1,6 @@
 package com.kosarev.dbconnection.repository;
 
+import com.kosarev.dbconnection.error.InternalException;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
@@ -14,7 +15,7 @@ public class ConnectorDB {
     protected Statement statement;
     protected ResultSet resultSet;
 
-    protected void initConnection() throws SQLException {
+    protected void initConnection() throws InternalException {
         try {
             connection = null;
             statement = null;
@@ -24,7 +25,7 @@ public class ConnectorDB {
         }
         catch (SQLException e){
             log.error("Connection error. " + e.getMessage());
-            throw new SQLException();
+            throw new InternalException("Connection error.");
         }
     }
 
@@ -32,7 +33,7 @@ public class ConnectorDB {
         try {
             connection.close();
         } catch (SQLException e){
-            e.printStackTrace();
+            log.error("Connection close error. " + e.getMessage());
         }
     }
 

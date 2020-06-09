@@ -2,6 +2,7 @@ package com.kosarev.dbconnection.repository;
 
 import com.kosarev.dbconnection.domain.Developer;
 import com.kosarev.dbconnection.domain.Sex;
+import com.kosarev.dbconnection.error.InternalException;
 import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
@@ -17,11 +18,11 @@ public class DeveloperDAO extends ConnectorDB{
     private PreparedStatement editStatement;
     private PreparedStatement deleteStatement;
 
-    public Optional<Developer> getDeveloper(int id) {
+    public Optional<Developer> getDeveloper(int id) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "SELECT id, name, age,  sex, salary " +
                 "FROM developers " +
@@ -45,11 +46,11 @@ public class DeveloperDAO extends ConnectorDB{
         return Optional.empty();
     }
 
-    public Optional<Developer> getDeveloper(String name) {
+    public Optional<Developer> getDeveloper(String name) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "SELECT id, name, age,  sex, salary " +
                 "FROM developers " +
@@ -73,12 +74,12 @@ public class DeveloperDAO extends ConnectorDB{
         return Optional.empty();
     }
 
-    public List<Developer> getAllDevelopers() {
+    public List<Developer> getAllDevelopers() throws InternalException {
         List<Developer> developers = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e) {
-            return developers;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "Select id, name, age, sex, salary FROM developers";
         resultSet = null;
@@ -102,11 +103,11 @@ public class DeveloperDAO extends ConnectorDB{
         return developers;
     }
 
-    public void addDeveloper(Developer developer) {
+    public void addDeveloper(Developer developer) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
         try {
@@ -122,11 +123,11 @@ public class DeveloperDAO extends ConnectorDB{
         }
     }
 
-    public void deleteDeveloper(Developer developer) {
+    public void deleteDeveloper(Developer developer) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 
@@ -140,11 +141,11 @@ public class DeveloperDAO extends ConnectorDB{
         }
     }
 
-    public void editDeveloper(Developer developer, String name, int age, Sex sex, double salary) {
+    public void editDeveloper(Developer developer, String name, int age, Sex sex, double salary) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 
@@ -162,11 +163,11 @@ public class DeveloperDAO extends ConnectorDB{
         }
     }
 
-    public double salaryFromAllDevelopersInProject(String projectName){
+    public double salaryFromAllDevelopersInProject(String projectName) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return 0;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "SELECT " +
                 "sum(developers.salary) as salary " +
@@ -189,12 +190,12 @@ public class DeveloperDAO extends ConnectorDB{
         return 0;
     }
 
-    public List<Developer> projectDevelopers(String projectName){
+    public List<Developer> projectDevelopers(String projectName) throws InternalException {
         List<Developer> developers = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e) {
-            return developers;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQuery = "SELECT projects.name as project_name, " +
                 "developers.name as developer_name, " +
@@ -227,12 +228,12 @@ public class DeveloperDAO extends ConnectorDB{
         return developers;
     }
 
-    public List<Developer> developerSkill(String skillName){
+    public List<Developer> developerSkill(String skillName) throws InternalException {
         List<Developer> developers = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e) {
-            return developers;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "SELECT " +
                 "skills.name as skill_name, " +
@@ -267,12 +268,12 @@ public class DeveloperDAO extends ConnectorDB{
         return developers;
     }
 
-    public List<Developer> developersSkillLevel(String skillLevel){
+    public List<Developer> developersSkillLevel(String skillLevel) throws InternalException {
         List<Developer> developers = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e) {
-            return developers;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQwery = "SELECT " +
                 "skill_levels.name as skill_levels_name, " +

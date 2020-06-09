@@ -1,6 +1,7 @@
 package com.kosarev.dbconnection.repository;
 
 import com.kosarev.dbconnection.domain.Project;
+import com.kosarev.dbconnection.error.InternalException;
 import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
@@ -18,11 +19,11 @@ public class ProjectDAO extends ConnectorDB {
     private PreparedStatement editStatement;
     private PreparedStatement deleteStatement;
 
-    public Optional<Project> getProject(int id) {
+    public Optional<Project> getProject(int id) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQuery = "SELECT name, comment, cost, createDate " +
                 "FROM projects " +
@@ -46,11 +47,11 @@ public class ProjectDAO extends ConnectorDB {
         return Optional.empty();
     }
 
-    public Optional<Project> getProject(String name) {
+    public Optional<Project> getProject(String name) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return Optional.empty();
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQuery = "SELECT id, name, comment, cost, createDate " +
                 "FROM projects " +
@@ -78,12 +79,12 @@ public class ProjectDAO extends ConnectorDB {
         return Optional.empty();
     }
 
-    public List<Project> getAllProjects() {
+    public List<Project> getAllProjects() throws InternalException {
         List<Project> projects = new ArrayList<>();
         try {
             initConnection();
-        } catch (SQLException e) {
-            return projects;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         String selectQuery = "Select id, name, comment, cost, createDate FROM projects";
         resultSet = null;
@@ -108,11 +109,11 @@ public class ProjectDAO extends ConnectorDB {
         return projects;
     }
 
-    public void addProject(Project project) {
+    public void addProject(Project project) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
         try {
@@ -128,11 +129,11 @@ public class ProjectDAO extends ConnectorDB {
         }
     }
 
-    public void deleteProject(Project project) {
+    public void deleteProject(Project project) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 
@@ -146,11 +147,11 @@ public class ProjectDAO extends ConnectorDB {
         }
     }
 
-    public void editProject(Project project, String name, String comment, double cost, LocalDate createDate) {
+    public void editProject(Project project, String name, String comment, double cost, LocalDate createDate) throws InternalException {
         try {
             initConnection();
-        } catch (SQLException e) {
-            return;
+        } catch (InternalException e){
+            throw new InternalException("Connection error.");
         }
         initPreparedStatements();
 

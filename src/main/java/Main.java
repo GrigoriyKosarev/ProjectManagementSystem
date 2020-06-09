@@ -2,9 +2,11 @@ import com.kosarev.dbconnection.domain.Customer;
 import com.kosarev.dbconnection.domain.Developer;
 import com.kosarev.dbconnection.domain.Project;
 import com.kosarev.dbconnection.domain.Sex;
+import com.kosarev.dbconnection.error.InternalException;
 import com.kosarev.dbconnection.service.CustomerService;
 import com.kosarev.dbconnection.service.DeveloperService;
 import com.kosarev.dbconnection.service.ProjectService;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
@@ -18,8 +20,7 @@ public class Main {
     private static final DeveloperService developerService = new DeveloperService();
 
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InternalException {
 
         customerService.addCustomer(new Customer("Apple", "Apple"));
         log.info("find customers by name: " + customerService.getCustomer("Apple"));
