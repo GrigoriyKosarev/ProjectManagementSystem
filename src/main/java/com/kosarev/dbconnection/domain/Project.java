@@ -1,25 +1,23 @@
 package com.kosarev.dbconnection.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Projects {
+public class Project {
 
     private int id;
     private String name;
     private String comment;
-    private double cost;
+    private BigDecimal cost;
     private LocalDate createDate;
 
-    public Projects() {
-    }
-
-    public Projects(String name, String comment, double cost, LocalDate createDate) {
+    public Project(String name, String comment, BigDecimal cost, LocalDate createDate) {
         setName(name);
         setComment(comment);
         setCost(cost);
     }
 
-    public Projects(int id, String name, String comment, double cost, LocalDate createDate) {
+    public Project(int id, String name, String comment, BigDecimal cost, LocalDate createDate) {
         setId(id);
         setName(name);
         setComment(comment);
@@ -27,11 +25,14 @@ public class Projects {
         setCreateDate(createDate);
     }
 
-    public Projects(int id, String name, String comment, double cost) {
+    public Project(int id, String name, String comment, BigDecimal cost) {
         setId(id);
         setName(name);
         setComment(comment);
         setCost(cost);
+    }
+
+    public Project() {
     }
 
     public int getId() {
@@ -46,7 +47,7 @@ public class Projects {
         return comment;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
@@ -66,7 +67,7 @@ public class Projects {
         this.comment = comment;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
@@ -76,7 +77,7 @@ public class Projects {
 
     @Override
     public String toString() {
-        return "Projects{" +
+        return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", comment='" + comment + '\'' +

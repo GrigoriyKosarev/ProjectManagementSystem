@@ -1,23 +1,23 @@
 package com.kosarev.dbconnection.domain;
 
-public class Customers {
+public class Customer {
 
     private int id;
     private String name;
-    private String full_name;
+    private String fullName;
 
-    public Customers(int id, String name, String full_name) {
+    public Customer(int id, String name, String fullName) {
         setId(id);
         setName(name);
-        setFullName(full_name);
+        setFullName(fullName);
     }
 
-    public Customers(String name, String full_name) {
+    public Customer(String name, String full_name) {
         setName(name);
         setFullName(full_name);
     }
 
-    public Customers() {
+    public Customer() {
     }
 
     public int getId() {
@@ -29,7 +29,7 @@ public class Customers {
     }
 
     public String getFullName() {
-        return full_name;
+        return fullName;
     }
 
     public void setId(int id) {
@@ -41,15 +41,15 @@ public class Customers {
     }
 
     public void setFullName(String fullName) {
-        this.full_name = fullName;
+        this.fullName = fullName;
     }
 
     @Override
     public String toString() {
-        return "Customers{" +
+        return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", full_name='" + full_name + '\'' +
+                ", full_name='" + fullName + '\'' +
                 '}';
     }
 }

@@ -1,59 +1,64 @@
-import com.kosarev.dbconnection.domain.Customers;
-import com.kosarev.dbconnection.domain.Developers;
-import com.kosarev.dbconnection.domain.Projects;
+import com.kosarev.dbconnection.domain.Customer;
+import com.kosarev.dbconnection.domain.Developer;
+import com.kosarev.dbconnection.domain.Project;
 import com.kosarev.dbconnection.domain.Sex;
-import com.kosarev.dbconnection.repository.CustomersDAO;
-import com.kosarev.dbconnection.service.CustomersService;
-import com.kosarev.dbconnection.service.DevelopersService;
-import com.kosarev.dbconnection.service.ProjectsService;
+import com.kosarev.dbconnection.service.CustomerService;
+import com.kosarev.dbconnection.service.DeveloperService;
+import com.kosarev.dbconnection.service.ProjectService;
+import lombok.extern.log4j.Log4j2;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Log4j2
 public class Main {
 
-    private static final CustomersService customersService = new CustomersService();
-    private static final ProjectsService projectsService = new ProjectsService();
-    private static final DevelopersService developersService = new DevelopersService();
+    private static final CustomerService customerService = new CustomerService();
+    private static final ProjectService projectService = new ProjectService();
+    private static final DeveloperService developerService = new DeveloperService();
+
 
     public static void main(String[] args) {
 
-        /*
-        customersService.addCustomers(new Customers("Apple", "Apple"));
-        System.out.println("find customers by name: " + customersService.getCustomers("Apple"));
-        customersService.addCustomers(new Customers("IBM", "IBM"));
-        customersService.deleteCustomers(customersService.getCustomers("IBM"));
-        customersService.editCustomers(customersService.getCustomers("Apple"), "Apple+", "Apple+");
-        System.out.println("all customers: " + customersService.getAllCustomers());
 
-        projectsService.addProjects(new Projects("Apple to do", "to do", 1000, LocalDate.of(2020, 01, 01)));
-        System.out.println("find projects by name: " + projectsService.getProjects("Apple to do"));
-        projectsService.addProjects(new Projects("IBM to do", "to do", 2000, LocalDate.of(2020, 01, 01)));
-        projectsService.deleteProjects(projectsService.getProjects("IBM to do"));
-        projectsService.editProjects(projectsService.getProjects("Apple to do"), "Apple to do +", "to do +", 5000, LocalDate.of(2020, 01, 01));
-        System.out.println("all projects: " + projectsService.getAllProjects());
+        customerService.addCustomer(new Customer("Apple", "Apple"));
+        log.info("find customers by name: " + customerService.getCustomer("Apple"));
+        customerService.addCustomer(new Customer("IBM", "IBM"));
+        customerService.deleteCustomer(customerService.getCustomer("IBM"));
+        customerService.editCustomer(customerService.getCustomer("Apple"), "Apple+", "Apple+");
+        log.info("all customers: " + customerService.getAllCustomers());
 
-        developersService.addDevelopers(new Developers("Petro", 40, Sex.MEN, 4000));
-        System.out.println("find projects by name: " + developersService.getDevelopers("Petro"));
-        developersService.addDevelopers(new Developers("Vas-Vas", 20, Sex.MEN, 800));
-        developersService.deleteDevelopers(developersService.getDevelopers("Vas-Vas"));
-        developersService.editDevelopers(developersService.getDevelopers("Petro"), "Petro +", 41, Sex.MEN, 4500);
-        System.out.println("all projects: " + developersService.getAllDevelopers());
-         */
+        projectService.addProject(new Project("Apple to do", "to do", new BigDecimal(1000), LocalDate.of(2020, 01, 01)));
+        log.info("find projects by name: " + projectService.getProject("Apple to do"));
+        projectService.addProject(new Project("IBM to do", "to do", new BigDecimal(2000), LocalDate.of(2020, 01, 01)));
+        projectService.deleteProject(projectService.getProject("IBM to do"));
+        projectService.editProject(projectService.getProject("Apple to do"), "Apple to do +", "to do +", 5000, LocalDate.of(2020, 01, 01));
+        log.info("all projects: " + projectService.getAllProjects());
 
-        System.out.println("Зарплата всех разработчиков отдельного проекта ('boots'): " +
-                developersService.salaryFromAllDevelopersInProject("boots"));
+        developerService.addDeveloper(new Developer("Petro", 40, Sex.MEN, new BigDecimal(4000)));
+        log.info("find projects by name: " + developerService.getDeveloper("Petro"));
+        developerService.addDeveloper(new Developer("Vas-Vas", 20, Sex.MEN, new BigDecimal(800)));
+        developerService.deleteDeveloper(developerService.getDeveloper("Vas-Vas"));
+        developerService.editDeveloper(developerService.getDeveloper("Petro"), "Petro +", 41, Sex.MEN, 4500);
+        log.info("all projects: " + developerService.getAllDevelopers());
 
-        System.out.println("Cписок разработчиков отдельного проекта ('boots'): " +
-                developersService.projectDevelopers("boots"));
 
-        System.out.println("Cписок всех Java разработчиков: " +
-                developersService.developersSkill("Java"));
 
-        System.out.println("Cписок всех middle разработчиков: " +
-                developersService.developersSkillLevel("Middle"));
 
-        System.out.println("Cписок проектов в следующем формате: дата создания - название проекта - количество разработчиков на этом проекте: ");
-        System.out.println(projectsService.formatedProjectList());
+        log.info("Зарплата всех разработчиков отдельного проекта ('boots'): " +
+                developerService.salaryFromAllDevelopersInProject("boots"));
+
+        log.info("Cписок разработчиков отдельного проекта ('boots'): " +
+                developerService.projectDevelopers("boots"));
+
+        log.info("Cписок всех Java разработчиков: " +
+                developerService.developersSkill("Java"));
+
+        log.info("Cписок всех middle разработчиков: " +
+                developerService.developersSkillLevel("Middle"));
+
+        log.info("Cписок проектов в следующем формате: дата создания - название проекта - количество разработчиков на этом проекте: ");
+        log.info(projectService.formatedProjectList());
 
     }
 

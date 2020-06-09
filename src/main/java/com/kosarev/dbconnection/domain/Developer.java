@@ -1,29 +1,31 @@
 package com.kosarev.dbconnection.domain;
 
-public class Developers {
+import java.math.BigDecimal;
+
+public class Developer {
 
     private int id;
     private String name;
     private int age;
     private Sex  sex;
-    private double salary;
+    private BigDecimal salary;
 
-    public Developers() {
-    }
-
-    public Developers(String name, int age, Sex sex, double salary) {
+    public Developer(String name, int age, Sex sex, BigDecimal salary) {
         setName(name);
         setAge(age);
         setSex(sex);
         setSalary(salary);
     }
 
-    public Developers(int id, String name, int age, Sex sex, double salary) {
+    public Developer(int id, String name, int age, Sex sex, BigDecimal salary) {
         setId(id);
         setName(name);
         setAge(age);
         setSex(sex);
         setSalary(salary);
+    }
+
+    public Developer() {
     }
 
     public int getId() {
@@ -42,7 +44,7 @@ public class Developers {
         return sex;
     }
 
-    public double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
@@ -62,13 +64,13 @@ public class Developers {
         this.sex = sex;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
     @Override
     public String toString() {
-        return "Developers{" +
+        return "Developer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +

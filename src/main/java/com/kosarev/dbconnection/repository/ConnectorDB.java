@@ -1,7 +1,10 @@
 package com.kosarev.dbconnection.repository;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.sql.*;
 
+@Log4j2
 public class ConnectorDB {
 
     protected static final String LOGIN = "root";
@@ -11,7 +14,7 @@ public class ConnectorDB {
     protected Statement statement;
     protected ResultSet resultSet;
 
-    protected void initConnection() {
+    protected void initConnection() throws SQLException {
         try {
             connection = null;
             statement = null;
@@ -20,7 +23,8 @@ public class ConnectorDB {
             statement = connection.createStatement();
         }
         catch (SQLException e){
-            System.out.println("Connection error. " + e.getMessage());
+            log.error("Connection error. " + e.getMessage());
+            throw new SQLException();
         }
     }
 
@@ -37,7 +41,7 @@ public class ConnectorDB {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                System.out.println("resultSet error. " + e.getMessage());
+               log.error("resultSet error. " + e.getMessage());
             }
         }
     }
